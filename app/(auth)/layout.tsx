@@ -2,18 +2,16 @@ import Navbar from "@/components/shared/navbar";
 import { getMe } from "@/service/getMe";
 import React from "react";
 
-const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
+const AuthLayout = async({ children }: { children: React.ReactNode }) => {
   const user = await getMe();
-
-//   console.log("Dashboard User:", user);
+//   console.log("Auth User:", user);
 
   return (
-    <div>
+    <div className=" max-w-7xl mx-auto ">
       <Navbar user={user} />
-
       {children}
     </div>
   );
 };
 
-export default DashboardLayout;
+export default AuthLayout;
