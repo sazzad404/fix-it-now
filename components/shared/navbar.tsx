@@ -14,7 +14,6 @@ import {
   DropdownMenuTrigger,
   DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
-
 import {
   Sheet,
   SheetContent,
@@ -22,7 +21,14 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 
-import { Settings, LogOut, User, Menu } from "lucide-react";
+import {
+  Settings,
+  LogOut,
+  User,
+  Menu,
+  LayoutDashboard,
+} from "lucide-react";
+
 import { logout } from "@/service/logout";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -38,7 +44,7 @@ const NAV_ITEMS = [
 const USER_OPTIONS = [
   {
     label: "Profile",
-    href: "/profile",
+    href: "/dashboard/profile",
     icon: User,
   },
   {
@@ -82,9 +88,28 @@ export default function Navbar({ user }: NavbarProps) {
       .slice(0, 2)
       .toUpperCase() || "U";
 
+  // =====================================================
+
+  // =====================================================
+  const handleDashboard = () => {
+    const role = userData?.role;
+
+    if (role === "CUSTOMER") {
+      router.push("/dashboard");
+    } else if (role === "TECHNICIAN") {
+      router.push("/technician-dashboard");
+    } else if (role === "ADMIN") {
+      router.push("/admin-dashboard");
+    } else {
+      
+      router.push("/dashboard");
+    }
+  };
+
   const handleLogOut = async () => {
     try {
       const result = await logout();
+
       if (result?.success) {
         toast.success("Logged out successfully");
         router.replace("/login");
@@ -94,8 +119,9 @@ export default function Navbar({ user }: NavbarProps) {
       }
     } catch (error) {
       console.error("Logout error", error);
-      toast.error("Logged failed", {
-        description: "something went wrong. Please try again!",
+
+      toast.error("Logout failed", {
+        description: "Something went wrong. Please try again!",
       });
     }
   };
@@ -103,9 +129,11 @@ export default function Navbar({ user }: NavbarProps) {
   return (
     <nav className="border-b bg-background">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+
         {/* ==============================
             Logo + Brand
         ============================== */}
+
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2">
             <div className="flex size-8 items-center justify-center rounded-lg bg-primary font-bold text-primary-foreground">
@@ -120,6 +148,7 @@ export default function Navbar({ user }: NavbarProps) {
           {/* ==============================
               Desktop Navigation
           ============================== */}
+
           <div className="hidden items-center gap-1 md:flex">
             {NAV_ITEMS.map((item) => (
               <Link
@@ -136,11 +165,14 @@ export default function Navbar({ user }: NavbarProps) {
         {/* ==============================
             Right Section
         ============================== */}
+
         <div className="flex items-center gap-4">
+
           {/* ==============================
               Mobile Menu
           ============================== */}
-          <div className="md:hidden ">
+
+          <div className="md:hidden">
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -168,10 +200,15 @@ export default function Navbar({ user }: NavbarProps) {
           {/* ==============================
               User Dropdown
           ============================== */}
+
           {user.success ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full"
+                >
                   <div className="flex size-8 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
                     {avatar}
                   </div>
@@ -179,11 +216,14 @@ export default function Navbar({ user }: NavbarProps) {
               </DropdownMenuTrigger>
 
               <DropdownMenuContent align="end" className="w-64">
+
                 {/* ==============================
                   User Information
-              ============================== */}
+                ============================== */}
+
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex items-center gap-3">
+
                     {/* Avatar */}
                     <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10 font-semibold text-primary">
                       {avatar}
@@ -203,6 +243,7 @@ export default function Navbar({ user }: NavbarProps) {
                         {userData?.role || "Customer"}
                       </p>
                     </div>
+
                   </div>
                 </DropdownMenuLabel>
 
@@ -210,8 +251,10 @@ export default function Navbar({ user }: NavbarProps) {
 
                 {/* ==============================
                   User Options
-              ============================== */}
+                ============================== */}
+
                 <DropdownMenuGroup>
+
                   {USER_OPTIONS.map((option) => {
                     const Icon = option.icon;
 
@@ -219,7 +262,9 @@ export default function Navbar({ user }: NavbarProps) {
                       <DropdownMenuItem
                         key={option.href}
                         onClick={() => {
-                          window.location.href = option.href;
+                          // 🔴 CHANGE 2:
+                          // window.location.href এর বদলে router.push()
+                          router.push(option.href);
                         }}
                         className="flex items-center gap-2"
                       >
@@ -228,13 +273,29 @@ export default function Navbar({ user }: NavbarProps) {
                       </DropdownMenuItem>
                     );
                   })}
+
+                  {/* =================================================
+                      🔴 CHANGE 3:
+                      Dashboard আলাদা করে add করা হয়েছে
+                      এবং role অনুযায়ী redirect হবে
+                  ================================================= */}
+
+                  <DropdownMenuItem
+                    onClick={handleDashboard}
+                    className="flex items-center gap-2"
+                  >
+                    <LayoutDashboard className="size-4" />
+                    <span>Dashboard</span>
+                  </DropdownMenuItem>
+
                 </DropdownMenuGroup>
 
                 <DropdownMenuSeparator />
 
                 {/* ==============================
                   Logout
-              ============================== */}
+                ============================== */}
+
                 <DropdownMenuItem
                   onClick={handleLogOut}
                   variant="destructive"
@@ -243,14 +304,17 @@ export default function Navbar({ user }: NavbarProps) {
                   <LogOut className="size-4" />
                   <span>Log out</span>
                 </DropdownMenuItem>
+
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Link href={"/login"}>
-              {" "}
-              <Button className="rounded-2xl cursor-pointer">Login</Button>
+            <Link href="/login">
+              <Button className="cursor-pointer rounded-2xl">
+                Login
+              </Button>
             </Link>
           )}
+
         </div>
       </div>
     </nav>

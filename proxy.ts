@@ -93,11 +93,22 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (pathName.startsWith("/dashboard") && userRole !== "CUSTOMER") {
+  // Customer dashboard
+  if (
+    pathName.startsWith("/dashboard") &&
+    !pathName.startsWith("/dashboard/profile") &&
+    userRole !== "CUSTOMER"
+  ) {
     return NextResponse.redirect(new URL("/not-found", request.url));
-  } else if (pathName.startsWith("/admin-dashboard") && userRole !== "ADMIN") {
+  }
+
+  // Admin dashboard
+  if (pathName.startsWith("/admin-dashboard") && userRole !== "ADMIN") {
     return NextResponse.redirect(new URL("/not-found", request.url));
-  } else if (
+  }
+
+  // Technician dashboard
+  if (
     pathName.startsWith("/technician-dashboard") &&
     userRole !== "TECHNICIAN"
   ) {
@@ -111,8 +122,8 @@ export async function proxy(request: NextRequest) {
       subscribeStatus?.success && subscribeStatus.data?.isSubscribed,
     );
 
-    if(!isActive){
-      return NextResponse.redirect(new URL("/payment", request.url))
+    if (!isActive) {
+      return NextResponse.redirect(new URL("/payment", request.url));
     }
   }
 

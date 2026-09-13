@@ -1,9 +1,13 @@
+"use client";
 import { IService } from "@/lib/type";
 import { Crown } from "lucide-react";
 import Image from "next/image";
+import ServiceDetailsModal from "./serviceDetailModal";
+import { useState } from "react";
 
 const ServiceCard = ({ service }: { service: IService }) => {
-  console.log("service card ", service);
+  const [open, setOpen] = useState(false);
+  // console.log("service card ", service);
 
   return (
     <div className="group overflow-hidden rounded-2xl border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
@@ -39,9 +43,7 @@ const ServiceCard = ({ service }: { service: IService }) => {
           {service.category.name}
         </p>
 
-        <h2 className="mt-2 text-xl font-semibold">
-          {service.title}
-        </h2>
+        <h2 className="mt-2 text-xl font-semibold">{service.title}</h2>
 
         <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">
           {service.description}
@@ -49,21 +51,29 @@ const ServiceCard = ({ service }: { service: IService }) => {
 
         <div className="mt-5 flex items-center justify-between border-t pt-4">
           <div>
-            <p className="text-xs text-muted-foreground">
-              Starting from
-            </p>
+            <p className="text-xs text-muted-foreground">Starting from</p>
 
             <p className="mt-1 text-lg font-bold text-primary">
               ৳{service.price}
             </p>
           </div>
 
-          <button className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+          <button
+            onClick={() => setOpen(true)}
+            className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+          >
             View Details
           </button>
         </div>
       </div>
+      <ServiceDetailsModal
+        service={service}
+        open={open}
+        onOpenChange={setOpen}
+      />
     </div>
+
+    // MODAL
   );
 };
 
