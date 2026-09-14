@@ -10,11 +10,13 @@ import {
 } from "lucide-react";
 
 import { BookingData } from "../dashboard/bookings/page";
+import { useState } from "react";
+import ReviewModal from "./ReviewModal";
 
 const BookingCard = ({ booking }: { booking: BookingData }) => {
   const { service, technician } = booking;
 
-  // 🔵 Status অনুযায়ী color
+  const [reviewOpen, setReviewOpen] = useState(false);
   const statusStyle =
     booking.status === "COMPLETED"
       ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
@@ -180,9 +182,24 @@ const BookingCard = ({ booking }: { booking: BookingData }) => {
                 {service.isPremium ? "Premium" : "Standard"}
               </p>
             </div>
+            {booking.status === "COMPLETED" && (
+              <button
+                onClick={() => setReviewOpen(true)}
+                className="flex items-center gap-2 rounded-lg bg-yellow-500 px-4 py-2 text-sm font-semibold text-black transition hover:bg-yellow-400"
+              >
+                <Star className="size-4 fill-current" />
+                Review
+              </button>
+            )}
           </div>
         </div>
       </div>
+      <ReviewModal
+        bookingId={booking.id}
+        serviceTitle={service.title}
+        open={reviewOpen}
+        onOpenChange={setReviewOpen}
+      />
     </div>
   );
 };
