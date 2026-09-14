@@ -39,3 +39,37 @@ export type IService = {
     };
   };
 };
+
+
+export type IBooking = {
+  id: string;
+  customerId: string;
+  technicianId: string;
+  serviceId: string;
+  bookingDate: string;
+  slotTime: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+
+  service: {
+    id: string;
+    categoryId: string;
+    technicianId: string;
+    title: string;
+    price: string;
+    description: string;
+    thumbnail?: string;
+    isPremium: boolean;
+    createdAt: string;
+  };
+  customer: {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+};

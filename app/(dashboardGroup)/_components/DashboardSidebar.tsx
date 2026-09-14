@@ -19,6 +19,9 @@ import {
   Menu,
   X,
   Hammer,
+  ListTree,
+  UserCircle,
+  CalendarArrowDownIcon,
 } from "lucide-react";
 import { useState } from "react";
 import { JwtPayload } from "jsonwebtoken";
@@ -94,6 +97,24 @@ const DashboardSidebar = ({ user }: { user: JwtPayload }) => {
       href: "/technicians",
       icon: Hammer,
       roles: ["CUSTOMER", "TECHNICIAN", "ADMIN"],
+    },
+    {
+      title: "Category Management",
+      href: "/admin-dashboard/categories",
+      icon: ListTree,
+      roles: [ "ADMIN"],
+    },
+    {
+      title: "User Management",
+      href: "/admin-dashboard/users",
+      icon: UserCircle,
+      roles: [ "ADMIN"],
+    },
+    {
+      title: "Bookings Management",
+      href: "/admin-dashboard/bookings",
+      icon: CalendarArrowDownIcon,
+      roles: [ "ADMIN"],
     },
   ];
 
