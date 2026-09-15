@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  ArrowRight,
-  Briefcase,
-  Clock,
-  Mail,
-  MapPin,
-  Star,
-} from "lucide-react";
+import { ArrowRight, Briefcase, Clock, Mail, MapPin, Star } from "lucide-react";
 import { useState } from "react";
 import TechnicianDetailsModal from "./TechnicianModal";
 
@@ -22,13 +15,24 @@ export type Technician = {
   availability: string[];
   createdAt: string;
   updatedAt: string;
+
   user: {
     id: string;
     name: string;
     email: string;
   };
-};
 
+  reviews: {
+    id: string;
+    bookingId: string;
+    customerId: string;
+    technicianId: string;
+    rating: number;
+    comment: string;
+    createdAt: string;
+    updatedAt: string;
+  }[];
+};
 const TechnicianCard = ({ technician }: { technician: Technician }) => {
   const [showDetails, setShowDetails] = useState(false);
 
@@ -56,11 +60,15 @@ const TechnicianCard = ({ technician }: { technician: Technician }) => {
           </div>
 
           {/* Rating */}
-          <div className="absolute right-4 top-4 flex items-center gap-1 rounded-full border border-white/10 bg-zinc-900/80 px-3 py-1.5 backdrop-blur">
+          <div className="absolute right-4 top-4 flex items-center gap-2 rounded-full border border-white/10 bg-zinc-900/80 px-3 py-1.5 backdrop-blur">
             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
 
             <span className="text-sm font-semibold text-white">
               {technician.rating || 0}
+            </span>
+
+            <span className="text-xs text-zinc-500">
+              ({technician.reviews?.length || 0})
             </span>
           </div>
         </div>
@@ -76,9 +84,7 @@ const TechnicianCard = ({ technician }: { technician: Technician }) => {
             <div className="mt-1 flex items-center gap-1.5 text-sm text-zinc-500">
               <Mail className="h-4 w-4 shrink-0" />
 
-              <span className="truncate">
-                {technician.user.email}
-              </span>
+              <span className="truncate">{technician.user.email}</span>
             </div>
           </div>
 
@@ -133,9 +139,7 @@ const TechnicianCard = ({ technician }: { technician: Technician }) => {
                   </span>
                 ))
               ) : (
-                <span className="text-sm text-zinc-600">
-                  No skills added
-                </span>
+                <span className="text-sm text-zinc-600">No skills added</span>
               )}
 
               {technician.skills?.length > 4 && (
@@ -163,7 +167,6 @@ const TechnicianCard = ({ technician }: { technician: Technician }) => {
             className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-white/[0.06] px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-600"
           >
             View Technician
-
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
         </div>

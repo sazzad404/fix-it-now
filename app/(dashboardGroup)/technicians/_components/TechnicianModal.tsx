@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Briefcase,
-  Clock,
-  Mail,
-  MapPin,
-  Star,
-  X,
-} from "lucide-react";
+import { Briefcase, Clock, Mail, MapPin, Star, X } from "lucide-react";
 import { useEffect } from "react";
 import { Technician } from "./TechnicianCard";
 
@@ -90,9 +83,7 @@ const TechnicianDetailsModal = ({
               {technician.rating || 0}
             </span>
 
-            <span className="text-xs text-zinc-500">
-              Rating
-            </span>
+            <span className="text-xs text-zinc-500">Rating</span>
           </div>
         </div>
 
@@ -108,9 +99,7 @@ const TechnicianDetailsModal = ({
               <div className="mt-2 flex items-center gap-2 text-sm text-zinc-500">
                 <Mail className="h-4 w-4 shrink-0 text-blue-400" />
 
-                <span className="break-all">
-                  {technician.user.email}
-                </span>
+                <span className="break-all">{technician.user.email}</span>
               </div>
             </div>
 
@@ -121,9 +110,7 @@ const TechnicianDetailsModal = ({
                 <div className="flex items-center gap-2 text-zinc-500">
                   <Briefcase className="h-4 w-4 text-blue-400" />
 
-                  <span className="text-xs">
-                    Experience
-                  </span>
+                  <span className="text-xs">Experience</span>
                 </div>
 
                 <p className="mt-2 text-sm font-bold text-white">
@@ -136,9 +123,7 @@ const TechnicianDetailsModal = ({
                 <div className="flex items-center gap-2 text-zinc-500">
                   <MapPin className="h-4 w-4 text-blue-400" />
 
-                  <span className="text-xs">
-                    Location
-                  </span>
+                  <span className="text-xs">Location</span>
                 </div>
 
                 <p className="mt-2 truncate text-sm font-bold text-white">
@@ -151,9 +136,7 @@ const TechnicianDetailsModal = ({
                 <div className="flex items-center gap-2 text-zinc-500">
                   <Clock className="h-4 w-4 text-emerald-400" />
 
-                  <span className="text-xs">
-                    Availability
-                  </span>
+                  <span className="text-xs">Availability</span>
                 </div>
 
                 <p className="mt-2 text-sm font-bold text-white">
@@ -174,8 +157,7 @@ const TechnicianDetailsModal = ({
 
               <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
                 <p className="text-sm leading-7 text-zinc-400">
-                  {technician.bio ||
-                    "No professional bio available."}
+                  {technician.bio || "No professional bio available."}
                 </p>
               </div>
             </div>
@@ -203,9 +185,7 @@ const TechnicianDetailsModal = ({
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-zinc-600">
-                    No skills added.
-                  </p>
+                  <p className="text-sm text-zinc-600">No skills added.</p>
                 )}
               </div>
             </div>
@@ -236,6 +216,74 @@ const TechnicianDetailsModal = ({
                   <p className="text-sm text-zinc-600">
                     No availability added.
                   </p>
+                )}
+              </div>
+            </div>
+
+            {/* ================= REVIEWS ================= */}
+            <div className="mt-8">
+              <div className="mb-3 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="h-5 w-1 rounded-full bg-yellow-500" />
+
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-400">
+                    Customer Reviews
+                  </h3>
+                </div>
+
+                <span className="text-xs text-zinc-500">
+                  {technician.reviews?.length || 0} reviews
+                </span>
+              </div>
+
+              <div className="space-y-3">
+                {technician.reviews?.length ? (
+                  technician.reviews.map((review) => (
+                    <div
+                      key={review.id}
+                      className="rounded-2xl border border-white/5 bg-white/[0.02] p-4"
+                    >
+                      {/* Rating + Date */}
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-1">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <Star
+                              key={star}
+                              className={`h-4 w-4 ${
+                                star <= review.rating
+                                  ? "fill-yellow-400 text-yellow-400"
+                                  : "text-zinc-700"
+                              }`}
+                            />
+                          ))}
+                        </div>
+
+                        <span className="text-xs text-zinc-600">
+                          {new Date(review.createdAt).toLocaleDateString(
+                            "en-US",
+                            {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            },
+                          )}
+                        </span>
+                      </div>
+
+                      {/* Comment */}
+                      <p className="mt-3 text-sm leading-6 text-zinc-400">
+                        {review.comment || "No comment provided."}
+                      </p>
+                    </div>
+                  ))
+                ) : (
+                  <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-5 text-center">
+                    <Star className="mx-auto h-7 w-7 text-zinc-700" />
+
+                    <p className="mt-2 text-sm text-zinc-600">
+                      No reviews yet.
+                    </p>
+                  </div>
                 )}
               </div>
             </div>

@@ -1,10 +1,11 @@
 import React, { Suspense } from "react";
 import ServicesSkeleton from "./serviceSkeleton";
 import PremiumServices from "../services/PremiumServiceList";
+import Footer from "../_components/Footer";
 
 const PremiumServicesPage = () => {
   return (
-    <div className="mx-auto max-w-7xl space-y-6 px-4 py10 sm:px-6 lg:px-8">
+    <div className="mx-auto mt-10 max-w-7xl space-y-6 px-4 py10 sm:px-6 lg:px-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold"> Premium Services</h1>
@@ -14,9 +15,12 @@ const PremiumServicesPage = () => {
         </div>
       </div>
       <Suspense fallback={ServicesSkeleton()}>
-        <PremiumServices/>
+        <PremiumServices />
       </Suspense>
+        
     </div>
+    
+  
   );
 };
 

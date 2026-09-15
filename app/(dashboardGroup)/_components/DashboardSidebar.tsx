@@ -116,6 +116,12 @@ const DashboardSidebar = ({ user }: { user: JwtPayload }) => {
       icon: CalendarArrowDownIcon,
       roles: [ "ADMIN"],
     },
+    {
+      title: "My Bookings",
+      href: "/technician-dashboard/my-bookings",
+      icon: CalendarArrowDownIcon,
+      roles: [ "TECHNICIAN"],
+    },
   ];
 
   const visibleMenuItems = menuItems.filter((item) =>

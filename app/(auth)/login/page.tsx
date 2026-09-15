@@ -4,7 +4,7 @@ import LoginForm from "../_components/LoginForm";
 export default function LoginPage() {
   return (
     <>
-      <div className="min-h-screen flex items-center  justify-center  px-4">
+      <div className="min-h-screen  flex items-center  justify-center  px-4">
         <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-md">
           <div className="mb-6 text-center">
             <h1 className="text-3xl font-bold text-gray-900">Welcome Back</h1>
@@ -16,12 +16,7 @@ export default function LoginPage() {
 
           <LoginForm />
 
-          <p className="mt-6 text-center text-sm text-gray-500">
-            Don&apos;t have an account?{" "}
-            <Link href={"/register"} className="cursor-pointer font-medium text-black hover:underline">
-              Register
-            </Link>
-          </p>
+         
         </div>
       </div>
     </>

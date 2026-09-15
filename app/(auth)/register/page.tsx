@@ -17,12 +17,7 @@ const userRegisterPage = () => {
 
           <RegisterForm />
 
-          <p className="mt-6 text-center text-sm text-gray-500">
-            Already have an account?{" "}
-            <Link href={"/login"} className="cursor-pointer font-medium text-black hover:underline">
-              Login
-            </Link>
-          </p>
+          
         </div>
       </div>
     </>
