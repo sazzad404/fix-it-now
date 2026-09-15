@@ -20,5 +20,5 @@ const verifyToken = (token:string, secret: string)=>{
 }
 export const jwtUtils = {
 
-    // verifyToken
+    verifyToken
 }
