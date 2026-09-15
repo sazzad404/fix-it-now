@@ -2,10 +2,11 @@
 
 import { cookies } from "next/headers";
 
-const cookieStore = await cookies();
-const accessToken = cookieStore.get("accessToken")?.value;
+
 
 export const getUsers = async () => {
+  const cookieStore = await cookies();
+const accessToken = cookieStore.get("accessToken")?.value;
   const res = await fetch(
     `${process.env.BACKEND_API_URL}/api/admin/users`,
     {

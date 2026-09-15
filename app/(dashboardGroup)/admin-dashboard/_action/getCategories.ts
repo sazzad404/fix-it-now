@@ -1,11 +1,10 @@
-"use server"
+"use server";
 
 import { cookies } from "next/headers";
 
-const cookieStore = await cookies();
-const accessToken = cookieStore.get("accessToken")?.value;
-
 export const getCategories = async () => {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
   const res = await fetch(
     `${process.env.BACKEND_API_URL}/api/admin/categories`,
     {
@@ -13,7 +12,7 @@ export const getCategories = async () => {
         "Content-Type": "application/json",
         Cookie: `accessToken=${accessToken}`,
       },
-    }
+    },
   );
 
   const result = await res.json();
