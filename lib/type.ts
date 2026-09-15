@@ -70,6 +70,6 @@ export type IBooking = {
     role: string;
     status: string;
     createdAt: string;
-    updatedAt: string;
+    
   };
 };
